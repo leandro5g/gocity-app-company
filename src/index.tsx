@@ -6,6 +6,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 import { Routes } from "./routes";
 import { theme } from "./styles/theme";
+import { Home } from "./pages/Home";
 
 const Application: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const Application: React.FC = () => {
         <ToastProvider
           offsetTop={Number(theme.metrics.marginTop) + RFValue(20)}
         >
-          <Routes />
+          <Home />
         </ToastProvider>
       </ContextProvider>
     </ThemeProvider>

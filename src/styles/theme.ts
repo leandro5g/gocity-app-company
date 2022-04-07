@@ -2,7 +2,7 @@ import { metrics } from "./metrics";
 
 export const theme = {
   colors: {
-    primary: "#C72828",
+    primary: "#E03F50",
     primaryDark: "#7A1818",
     secondary: "#FFB84D",
     secondaryLight: "#FFC46B",
