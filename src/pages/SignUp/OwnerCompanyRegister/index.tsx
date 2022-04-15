@@ -190,7 +190,7 @@ const OwnerCompanyRegister: React.FC = () => {
           <ButtonPrimary
             onPress={handleSubmit(onSubmit)}
             icon="login"
-            textButton="Se registrar"
+            textButton="Cadastrar agora"
           />
         </Container>
       </KeyboardDismiss>

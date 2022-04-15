@@ -3,7 +3,7 @@ import { metrics } from "./metrics";
 export const theme = {
   colors: {
     primary: "#E03F50",
-    primaryDark: "#7A1818",
+    primaryDark: "#572D31",
     secondary: "#FFB84D",
     secondaryLight: "#FFC46B",
     primaryLight: "#FFB1B1",
@@ -15,7 +15,9 @@ export const theme = {
     gray: "#E4E4EB",
     background: "#E5E5E5",
     positive: "#41C900",
+    green: "#528F33",
     grayDark: "#B7B7CC",
+    border: "#D7D9E0",
   },
 
   fonts: {

@@ -9,10 +9,18 @@ import { Container, ContentDescription, Description } from "./styles";
 
 const ButtonBack: React.FC = () => {
   const { colors } = useTheme();
-  const { goBack } = useNavigation();
+  const { reset } = useNavigation();
 
   return (
-    <Container activeOpacity={0.9} onPress={goBack}>
+    <Container
+      activeOpacity={0.9}
+      onPress={() =>
+        reset({
+          routes: [{ name: "SignIn" } as never],
+          index: 1,
+        })
+      }
+    >
       <ContentDescription>
         <Feather
           color={colors.secondary}

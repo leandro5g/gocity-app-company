@@ -72,7 +72,7 @@ const SignIn: React.FC = () => {
     navigate(
       "SignUpRoutes" as never,
       {
-        screen: "CompanyInfo",
+        screen: "OwnerCompanyRegister",
       } as never
     );
   }, []);

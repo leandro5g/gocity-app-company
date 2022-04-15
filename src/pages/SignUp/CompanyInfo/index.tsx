@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useToast } from "react-native-toast-notifications";
 import { api } from "../../../services/api";
 
-import { maskBrazilianCellPhoneNumber, maskCPF } from "../../../utils/masks";
+import { maskBrazilianCellPhoneNumber, maskCNPJ } from "../../../utils/masks";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,20 +19,19 @@ import { ButtonBack } from "../components/ButtonBack";
 import { HeaderSignUp } from "../components/HeaderSignUp";
 
 import { Container, Content, Group } from "./styles";
+import {
+  PickerCategory,
+  ItemData,
+} from "../../../components/Forms/PickerCategory";
 
 const schema = Yup.object().shape({
   name: Yup.string().required("O nome é obrigatório"),
-  email: Yup.string()
-    .required("O e-mail é obrigatório")
-    .email("E-mail inválido"),
   cellphone: Yup.string()
     .required("A telefone é obrigatório")
     .min(15, "Telefone inválido")
     .max(15, "Telefone inválido"),
-  password: Yup.string()
-    .required("A senha é obrigatória")
-    .min(6, "A senha deve possuir pelo menos 6 caracteres."),
-  cpf: Yup.string().required("O CPF é obrigatório").min(14, "CPF inválido"),
+  category: Yup.string().required("A categoria é obrigatório"),
+  cnpj: Yup.string().required("O CNPJ é obrigatório").min(18, "CNPJ inválido"),
 });
 
 interface FormProps {
@@ -51,11 +50,14 @@ const CompanyInfo: React.FC = () => {
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [categoryId, setCategoryId] = useState("");
 
   const onSubmit = useCallback(
     async ({ email, password, cellphone, name, cpf }: FormProps) => {
@@ -116,6 +118,14 @@ const CompanyInfo: React.FC = () => {
     []
   );
 
+  const handleSelectedCategory = useCallback(({ id, value }: ItemData) => {
+    setValue("category", value);
+    setError("category", {
+      message: "",
+    });
+    setCategoryId(id);
+  }, []);
+
   return (
     <KeyboardView>
       <KeyboardDismiss>
@@ -142,15 +152,15 @@ const CompanyInfo: React.FC = () => {
             />
 
             <InputHookForm
-              error={errors?.cpf?.message}
-              name="cpf"
+              error={errors?.cnpj?.message}
+              name="cnpj"
               icon="card-text"
               control={control}
               placeholder="CNPJ da sua loja"
               keyboardType="numeric"
               isLoading={isLoading}
-              mask={maskCPF}
-              maxLength={14}
+              mask={maskCNPJ}
+              maxLength={18}
             />
 
             <InputHookForm
@@ -165,23 +175,26 @@ const CompanyInfo: React.FC = () => {
               isLoading={isLoading}
             />
 
-            <InputHookForm
-              error={errors?.cellphone?.message}
-              name="cellphone"
-              icon="cellphone"
-              control={control}
-              mask={maskBrazilianCellPhoneNumber}
-              placeholder="Telefone ou celular da loja"
-              keyboardType="numeric"
-              maxLength={15}
-              isLoading={isLoading}
-            />
+            <PickerCategory
+              isLoad={false}
+              title="Escolha a categoria"
+              onSelectedValue={handleSelectedCategory}
+            >
+              <InputHookForm
+                error={errors?.category?.message}
+                name="category"
+                icon="clipboard-list"
+                control={control}
+                placeholder="Categoria da Loja"
+                editable={false}
+              />
+            </PickerCategory>
           </Content>
 
           <ButtonPrimary
             onPress={handleSubmit(onSubmit)}
-            icon="login"
-            textButton="Se registrar"
+            icon="city-variant"
+            textButton="Cadastrar loja"
           />
         </Container>
       </KeyboardDismiss>
